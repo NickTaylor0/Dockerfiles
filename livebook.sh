@@ -1,4 +1,4 @@
-/app/tailscaled --state=/var/lib/tailscale/tailscaled.state --socket=/var/run/tailscale/tailscaled.sock &
-/app/tailscale up --auth-key=${TAILSCALE_AUTHKEY} --hostname=fly-app
-
- /app/bin/server
+/app/tailscaled --tun=userspace-networking --socks5-server=localhost:1055 &
+/app/tailscale up --auth-key=${TAILSCALE_AUTHKEY} --hostname=livebook
+echo Tailscale started
+ALL_PROXY=socks5://localhost:1055/ /app/bin/server
